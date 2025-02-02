@@ -4,10 +4,70 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CSnAI Notes</title>
+  
+  <!-- Docsify 主题 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-dark-mode/dist/style.min.css">
+
+  <style>
+    /* 顶部导航栏样式 */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 15px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    nav a, .dark-mode-button {
+      text-decoration: none;
+      color: #333;
+      font-size: 16px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+    
+    nav a:hover, .dark-mode-button:hover {
+      background: #ddd;
+    }
+
+    /* 适配深色模式 */
+    body.dark-mode nav {
+      background: rgba(20, 20, 20, 0.9);
+    }
+
+    body.dark-mode nav a, 
+    body.dark-mode .dark-mode-button {
+      color: #fff;
+    }
+
+    body.dark-mode nav a:hover, 
+    body.dark-mode .dark-mode-button:hover {
+      background: #444;
+    }
+
+    /* 让内容部分下移，避免被导航栏遮挡 */
+    #app {
+      margin-top: 60px;
+    }
+  </style>
 </head>
+
 <body>
+  <!-- 顶部导航栏 -->
+  <nav>
+    <a href="#/">首页</a>
+    <a href="#/guide">指南</a>
+    <a href="https://github.com/owencalstroy/CSnAI-notes" target="_blank">GitHub</a>
+    <button class="dark-mode-button">🌗 切换深色模式</button>
+  </nav>
+
+  <!-- Docsify 渲染区域 -->
   <div id="app">加载中...</div>
 
   <!-- Docsify 配置 -->
@@ -18,29 +78,20 @@
       loadSidebar: true,  // 启用左侧目录
       loadNavbar: true,    // 启用顶部导航
       subMaxLevel: 3,      // 右侧目录层级
-      coverpage: true,     // 封面页面
+      coverpage: true,     // 启用封面
       search: 'auto',      // 搜索功能
       darkMode: {
-        default: false,   // 默认是浅色模式
-        toggleEl: '#dark-mode-toggle' // 切换按钮
+        default: false,   
+        toggleEl: '.dark-mode-button' // 这里需要改成 .dark-mode-button
       }
-    }
+    };
   </script>
 
-  <nav>
-    <a href="#/">首页</a>
-    <a href="#/guide">指南</a>
-    <a href="https://github.com/owencalstroy/CSnAI-notes" target="_blank">GitHub</a>
-    <button id="dark-mode-toggle">🌗 切换深色模式</button>
-  </nav>
-
-  <!-- 引入 Docsify 核心库 -->
+  <!-- Docsify 核心库 -->
   <script src="https://cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
-  
-  <!-- 深色/浅色模式切换 -->
-  <script src="https://cdn.jsdelivr.net/npm/docsify-dark-mode/dist/index.min.js"></script>
 
-  
+  <!-- Docsify 深色模式插件 -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify-dark-mode/dist/index.min.js"></script>
 
 </body>
 </html>
