@@ -60,27 +60,31 @@
   <!-- Docsify 配置 -->
   <script>
     window.$docsify = {
-      name: 'CSnAI Notes',
-      repo: 'https://github.com/owencalstroy/CSnAI-notes',
-      loadSidebar: true,  // 启用左侧目录
-      loadNavbar: true,    // 启用顶部导航
-      subMaxLevel: 3,      // 右侧目录层级
-      coverpage: true,     // 启用封面页面
-      search: 'auto',      // 搜索功能
-      darkMode: {
-        default: false,   
-        toggleEl: '#dark-mode-toggle' // 绑定深色模式按钮
-      }
+    name: 'CSnAI Notes',
+    repo: 'https://github.com/owencalstroy/CSnAI-notes',
+    loadSidebar: true,
+    loadNavbar: true,
+    subMaxLevel: 3,
+    coverpage: true,  // 启用封面页
+    search: 'auto',
+    alias: {
+        "/": "/README" 
+    },
+    darkMode: {
+        default: false,
+        toggleEl: '#dark-mode-toggle'
+    }
     };
 
-    // 自动滚动到正文
-    document.addEventListener("DOMContentLoaded", function () {
-      setTimeout(function () {
+    // 让 GitHub Pages 也能自动滚动
+    window.onload = function () {
+    setTimeout(function () {
         if (location.hash === "" || location.hash === "#/") {
-          window.scrollTo({ top: window.innerHeight * 0.9, behavior: "smooth" });
+        window.scrollTo({ top: window.innerHeight * 0.3, behavior: "smooth" });
         }
-      }, 500);
-    });
+    }, 1500);
+    };
+
   </script>
 
   <!-- Docsify 核心库 -->
