@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSnAI Notes</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-dark-mode/dist/style.min.css">
+</head>
+<body>
+  <div id="app">加载中...</div>
+
+  <!-- Docsify 配置 -->
+  <script>
+    window.$docsify = {
+      name: 'CSnAI Notes',
+      repo: 'https://github.com/owencalstroy/CSnAI-notes',
+      loadSidebar: true,  // 启用左侧目录
+      loadNavbar: true,    // 启用顶部导航
+      subMaxLevel: 3,      // 右侧目录层级
+      coverpage: true,     // 封面页面
+      search: 'auto',      // 搜索功能
+      darkMode: {
+        default: false,   // 默认是浅色模式
+        toggleEl: '#dark-mode-toggle' // 切换按钮
+      }
+    }
+  </script>
+
+  <nav>
+    <a href="#/">首页</a>
+    <a href="#/guide">指南</a>
+    <a href="https://github.com/owencalstroy/CSnAI-notes" target="_blank">GitHub</a>
+    <button id="dark-mode-toggle">🌗 切换深色模式</button>
+  </nav>
+
+  <!-- 引入 Docsify 核心库 -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+  
+  <!-- 深色/浅色模式切换 -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify-dark-mode/dist/index.min.js"></script>
+
+  
+
+</body>
+</html>
