@@ -10,35 +10,63 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-dark-mode/dist/style.min.css">
 
   <style>
-    /* 确保正文不会被导航栏遮挡 */
+    /* 主内容区域调整 */
     #app {
-      margin-top: 20px !important;
+      margin: 70px 20px 20px 20px !important;
+      transition: margin-left 0.35s;
     }
-    /* 让封面页高度变小 */
-    .cover-main {
-      min-height: 30vh !important;
+
+    /* 侧边栏右侧定位 */
+    .sidebar {
+      left: auto !important;
+      right: 0 !important;
+      transform: translateX(100%);
     }
-    /* 导航栏样式 */
+
+    .sidebar-visible .sidebar {
+      transform: translateX(0);
+    }
+
+    /* 导航栏固定样式 */
     nav {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      background: rgba(255, 255, 255, 0.9);
-      padding: 10px 20px;
+      background: #ffffff;
+      padding: 15px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border-bottom: 1px solid #eee;
     }
-    /* 深色模式按钮样式 */
-    .dark-mode-button {
-      cursor: pointer;
-      padding: 5px 10px;
-      background: #333;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
+
+    /* 深色模式适配 */
+    .dark-mode--activated nav {
+      background: #1e1e1e;
+      border-color: #333;
+    }
+
+    /* 侧边栏宽度调整 */
+    .sidebar {
+      width: 260px !important;
+    }
+
+    /* 覆盖默认的侧边栏动画 */
+    .sidebar {
+      transition: transform 0.35s ease-out !important;
+    }
+
+    /* 移动端适配 */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 80% !important;
+      }
+      #app {
+        margin: 70px 10px 10px 10px !important;
+      }
     }
   </style>
 </head>
@@ -50,8 +78,8 @@
   <!-- 导航栏 -->
   <nav>
     <div>
-      <a href="#/">🏠 首页</a>
-      <a href="#/guide">📖 指南</a>
+      <a href="#/" style="margin-right: 20px;">🏠 首页</a>
+      <a href="#/guide" style="margin-right: 20px;">📖 指南</a>
       <a href="https://github.com/owencalstroy/CSnAI-notes" target="_blank">GitHub</a>
     </div>
     <button class="dark-mode-button" id="dark-mode-toggle">🌗 切换深色模式</button>
@@ -60,37 +88,25 @@
   <!-- Docsify 配置 -->
   <script>
     window.$docsify = {
-    name: 'CSnAI Notes',
-    repo: 'https://github.com/owencalstroy/CSnAI-notes',
-    loadSidebar: true,
-    //sidebar: 'auto',
-    loadNavbar: true,
-    subMaxLevel: 3,
-    coverpage: true,  // 启用封面页
-    search: 'auto',
-    alias: {
+      name: 'CSnAI Notes',
+      repo: 'https://github.com/owencalstroy/CSnAI-notes',
+      loadSidebar: true,
+      subMaxLevel: 3,
+      coverpage: true,
+      search: 'auto',
+      alias: {
         "/": "/README" 
-    },
-    darkMode: {
+      },
+      darkMode: {
         default: false,
         toggleEl: '#dark-mode-toggle'
-    },
-    coverpage: {
-      image: '/assets/images/wallpaper.png',  // 指定封面图片路径
-      width: 300,  // 可选：设置图片宽度
-      height: 200, // 可选：设置图片高度
-    }
+      },
+      coverpage: {
+        image: '/assets/images/wallpaper.png',
+        width: 300,
+        height: 200,
+      }
     };
-
-    // 让 GitHub Pages 也能自动滚动
-    window.onload = function () {
-    setTimeout(function () {
-        if (location.hash === "" || location.hash === "#/") {
-        window.scrollTo({ top: window.innerHeight * 1.0, behavior: "smooth" });
-        }
-    }, 1500);
-    };
-
   </script>
 
   <!-- Docsify 核心库 -->
