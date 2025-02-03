@@ -6,4 +6,4 @@ url: "https://owencalstroy.github.io"
 baseurl: "/CSnAI-notes"
 
 # 博客文章存放在_posts目录中
-# theme: jekyll-theme-freelancer      # 你可以选择使用已有的主题或自己编写模板
+theme: jekyll-theme-freelancer      # 你可以选择使用已有的主题或自己编写模板
