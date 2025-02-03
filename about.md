@@ -14,5 +14,8 @@ These notes serve as a personal resource, helping me to solidify my understandin
 
 Feel free to explore and learn along with me!
 
-How To Reach Me:
+
+
+**How To Reach Me:**
+
 E-mail: weiyichen21@163.com
