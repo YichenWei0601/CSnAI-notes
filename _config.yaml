@@ -1,10 +1,5 @@
 # _config.yml
-title: CS 'n AI Blog
-email: weiyichen21@163.com
-description: "My notes about CS and AI courses / explorations."
-url: "https://owencalstroy.github.io"
-baseurl: "/CSnAI-notes"
-
+# Configuration file for CSnAI Blog
 site_name: CSnAI Blog
 site_url: https://csnai.blog/
 site_author: Calscatt
@@ -14,6 +9,9 @@ site_description: >-
 repo_name: CSnAI-notes
 repo_url: https://github.com/OwenCalstroy/CSnAI-notes/
 
+email: weiyichen21@163.com
+author: Calscatt
+copyright: Copyright © 2024
 
 theme:
   name: material
