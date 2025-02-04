@@ -8,4 +8,5 @@
 ```cpp
 pair(): first(T1()), second(T2()) {}
 ```
-- 
+- 元素都相等视为 pair 相等。第一元素有优先级
+- make_pair() 无需写出 <> 型别，就可生成 pair 对象。
