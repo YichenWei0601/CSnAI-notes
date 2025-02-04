@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site_name }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/4.0.0/material-components-web.min.css">
+    <style>
+        body {
+            font-family: 'Roboto Slab', serif;
+            margin: 0;
+            padding: 20px;
+            color: #000000; /* Replace with actual color value */
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #ff0000; /* Replace with actual color value */
+        }
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 10px;
+            background-color: #cccccc; /* Replace with actual color value */
+            color: #333333; /* Replace with actual color value */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>{{ site_name }}</h1>
+        <p>{{ site_description }}</p>
+    </header>
+
+    <nav>
+        <a href="{{ site_url }}">主页</a>
+        <a href="LLM/">LLM</a>
+        <a href="cpp_books/">C++ Books</a>
+    </nav>
+
+    <main>
+        <h2>最近文章</h2>
+        <ul>
+            <li><a href="LLM/introduction.md">LLM Introduction</a></li>
+            <li><a href="cpp_books/introduction.md">C++ Books Introduction</a></li>
+        </ul>
+    </main>
+
+    <footer>
+        <p>{{ copyright }}</p>
+        <p>联系邮箱: <a href="mailto:{{ email }}">{{ email }}</a></p>
+    </footer>
+
+    <script>
+        // 获取配置信息
+        const siteName = "{{ site_name }}";
+        const siteUrl = "{{ site_url }}";
+        const primaryColor = "#ffffff"; /* Replace with actual color value */
+        const accentColor = "#ff0000"; /* Replace with actual color value */
+        const textColor = "#000000"; /* Replace with actual color value */
+        const footerColor = "#cccccc"; /* Replace with actual color value */
+        const copyright = "{{ copyright }}";
+        const email = "{{ email }}";
+
+        // 动态更新颜色
+        document.body.style.backgroundColor = primaryColor;
+        document.querySelectorAll('nav a').forEach(link => {
+            link.style.color = accentColor;
+        });
+        document.querySelector('footer').style.backgroundColor = footerColor;
+    </script>
+</body>
+</html>

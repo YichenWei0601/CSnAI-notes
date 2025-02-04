@@ -1,13 +1,6 @@
-# _config.yml
-# Configuration file for CSnAI Blog
-site_name: CSnAI Blog
-site_url: "https://csnai.blog/
-site_author: Calscatt
-site_description: >
-  CSnAI-notes 是一个记录自学过程的博客，主要包括计算机科学和人工智能的学习笔记。
 
-repo_name: CSnAI-notes
-repo_url: "https://github.com/OwenCalstroy/CSnAI-notes/
+site_name: CSnAI-notes
+site_url: "https://github.com/OwenCalstroy/CSnAI-notes/"
 
 email: weiyichen21@163.com
 author: Calscatt
