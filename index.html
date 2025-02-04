@@ -1,85 +1,103 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-cn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ site_name }}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/4.0.0/material-components-web.min.css">
-    <style>
-        body {
-            font-family: 'Roboto Slab', serif;
-            margin: 0;
-            padding: 20px;
-            color: #000000; /* Replace with actual color value */
-        }
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        nav {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        nav a {
-            margin: 0 15px;
-            text-decoration: none;
-            color: #ff0000; /* Replace with actual color value */
-        }
-        main {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        footer {
-            text-align: center;
-            margin-top: 30px;
-            padding: 10px;
-            background-color: #cccccc; /* Replace with actual color value */
-            color: #333333; /* Replace with actual color value */
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSnAI Notes</title>
+  
+  <!-- Docsify 样式 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-dark-mode/dist/style.min.css">
+
+  <style>
+    /* 确保正文不会被导航栏遮挡 */
+    #app {
+      margin-top: 20px !important;
+    }
+    /* 让封面页高度变小 */
+    .cover-main {
+      min-height: 30vh !important;
+    }
+    /* 导航栏样式 */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+    /* 深色模式按钮样式 */
+    .dark-mode-button {
+      cursor: pointer;
+      padding: 5px 10px;
+      background: #333;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>{{ site_name }}</h1>
-        <p>{{ site_description }}</p>
-    </header>
 
-    <nav>
-        <a href="{{ site_url }}">主页</a>
-        <a href="LLM/">LLM</a>
-        <a href="cpp_books/">C++ Books</a>
-    </nav>
+  <!-- Docsify 容器 -->
+  <div id="app">加载中...</div>
 
-    <main>
-        <h2>最近文章</h2>
-        <ul>
-            <li><a href="LLM/introduction.md">LLM Introduction</a></li>
-            <li><a href="cpp_books/introduction.md">C++ Books Introduction</a></li>
-        </ul>
-    </main>
+  <!-- 导航栏 -->
+  <nav>
+    <div>
+      <a href="#/">🏠 首页</a>
+      <a href="#/guide">📖 指南</a>
+      <a href="https://github.com/owencalstroy/CSnAI-notes" target="_blank">GitHub</a>
+    </div>
+    <button class="dark-mode-button" id="dark-mode-toggle">🌗 切换深色模式</button>
+  </nav>
 
-    <footer>
-        <p>{{ copyright }}</p>
-        <p>联系邮箱: <a href="mailto:{{ email }}">{{ email }}</a></p>
-    </footer>
+  <!-- Docsify 配置 -->
+  <script>
+    window.$docsify = {
+    name: 'CSnAI Notes',
+    repo: 'https://github.com/owencalstroy/CSnAI-notes',
+    loadSidebar: true,
+    //sidebar: 'auto',
+    loadNavbar: true,
+    subMaxLevel: 3,
+    coverpage: true,  // 启用封面页
+    search: 'auto',
+    alias: {
+        "/": "/README" 
+    },
+    darkMode: {
+        default: false,
+        toggleEl: '#dark-mode-toggle'
+    },
+    coverpage: {
+      image: '/assets/images/wallpaper.png',  // 指定封面图片路径
+      width: 300,  // 可选：设置图片宽度
+      height: 200, // 可选：设置图片高度
+    }
+    };
 
-    <script>
-        // 获取配置信息
-        const siteName = "{{ site_name }}";
-        const siteUrl = "{{ site_url }}";
-        const primaryColor = "#ffffff"; /* Replace with actual color value */
-        const accentColor = "#ff0000"; /* Replace with actual color value */
-        const textColor = "#000000"; /* Replace with actual color value */
-        const footerColor = "#cccccc"; /* Replace with actual color value */
-        const copyright = "{{ copyright }}";
-        const email = "{{ email }}";
+    // 让 GitHub Pages 也能自动滚动
+    window.onload = function () {
+    setTimeout(function () {
+        if (location.hash === "" || location.hash === "#/") {
+        window.scrollTo({ top: window.innerHeight * 1.0, behavior: "smooth" });
+        }
+    }, 1500);
+    };
 
-        // 动态更新颜色
-        document.body.style.backgroundColor = primaryColor;
-        document.querySelectorAll('nav a').forEach(link => {
-            link.style.color = accentColor;
-        });
-        document.querySelector('footer').style.backgroundColor = footerColor;
-    </script>
+  </script>
+
+  <!-- Docsify 核心库 -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+  
+  <!-- 深色/浅色模式切换 -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify-dark-mode/dist/index.min.js"></script>
+
 </body>
 </html>
