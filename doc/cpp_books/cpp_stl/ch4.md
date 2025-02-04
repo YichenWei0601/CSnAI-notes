@@ -27,3 +27,5 @@ ptr = std::auto_ptr<ClassA>(new ClassA);
 - pass by reference 使得无法预知所有权是否转交，应尽量避免。
 - const auto_ptr 是不能更改所有权的意思。
 - 不存在针对 array 设计的 auto_ptr。因为 auto_ptr 通过 delete 而非 delete[] 释放对象的。
+- 记得 #include <memory>
+- 
