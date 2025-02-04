@@ -40,6 +40,41 @@
       border: none;
       border-radius: 5px;
     }
+
+    /* 右侧目录样式 */
+    .sidebar {
+      position: fixed;
+      top: 60px;
+      right: 0;
+      width: 300px;
+      height: calc(100vh - 60px);
+      overflow-y: auto;
+      padding: 20px;
+      background: #f9f9f9;
+      border-left: 1px solid #ddd;
+      z-index: 999;
+    }
+
+    /* 左侧边栏样式 */
+    .sidebar-nav {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: 300px;
+      height: calc(100vh - 60px);
+      overflow-y: auto;
+      padding: 20px;
+      background: #f9f9f9;
+      border-right: 1px solid #ddd;
+      z-index: 999;
+    }
+
+    /* 主内容区域样式 */
+    .content {
+      margin-left: 320px;
+      margin-right: 320px;
+      padding: 20px;
+    }
   </style>
 </head>
 <body>
@@ -60,36 +95,61 @@
   <!-- Docsify 配置 -->
   <script>
     window.$docsify = {
-    name: 'CSnAI Notes',
-    repo: 'https://github.com/owencalstroy/CSnAI-notes',
-    loadSidebar: true,
-    //sidebar: 'auto',
-    loadNavbar: true,
-    subMaxLevel: 3,
-    coverpage: true,  // 启用封面页
-    search: 'auto',
-    alias: {
+      name: 'CSnAI Notes',
+      repo: 'https://github.com/owencalstroy/CSnAI-notes',
+      loadSidebar: true,
+      loadNavbar: true,
+      subMaxLevel: 3,
+      coverpage: true,  // 启用封面页
+      search: 'auto',
+      alias: {
         "/": "/README" 
-    },
-    darkMode: {
+      },
+      darkMode: {
         default: false,
         toggleEl: '#dark-mode-toggle'
-    },
-    coverpage: {
-      image: '/assets/images/wallpaper.png',  // 指定封面图片路径
-      width: 300,  // 可选：设置图片宽度
-      height: 200, // 可选：设置图片高度
-    }
+      },
+      coverpage: {
+        image: '/assets/images/wallpaper.png',  // 指定封面图片路径
+        width: 300,  // 可选：设置图片宽度
+        height: 200, // 可选：设置图片高度
+      }
     };
 
     // 让 GitHub Pages 也能自动滚动
     window.onload = function () {
-    setTimeout(function () {
+      setTimeout(function () {
         if (location.hash === "" || location.hash === "#/") {
-        window.scrollTo({ top: window.innerHeight * 1.0, behavior: "smooth" });
+          window.scrollTo({ top: window.innerHeight * 1.0, behavior: "smooth" });
         }
-    }, 1500);
+      }, 1500);
     };
+
+    // 自定义插件：生成右侧目录
+    window.$docsify.plugins = [].concat(function (hook, vm) {
+      hook.doneEach(function () {
+        const content = document.querySelector('.content');
+        const headings = content.querySelectorAll('h1, h2, h3, h4, h5, h6');
+        const toc = document.createElement('div');
+        toc.className = 'sidebar';
+
+        headings.forEach(heading => {
+          const link = document.createElement('a');
+          link.href = `#${heading.id}`;
+          link.textContent = heading.textContent;
+          link.style.display = 'block';
+          link.style.marginLeft = `${(parseInt(heading.tagName[1]) - 1) * 10}px`;
+          toc.appendChild(link);
+        });
+
+        const existingToc = document.querySelector('.sidebar');
+        if (existingToc) {
+          existingToc.remove();
+        }
+
+        document.body.appendChild(toc);
+      });
+    }, window.$docsify.plugins || []);
 
   </script>
 

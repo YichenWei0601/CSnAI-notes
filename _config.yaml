@@ -1,9 +1,0 @@
-# _config.yml
-title: CS 'n AI Blog
-email: weiyichen21@163.com
-description: "My notes about CS and AI courses / explorations."
-url: "https://owencalstroy.github.io"
-baseurl: "/CSnAI-notes"
-
-# 博客文章存放在_posts目录中
-theme: jekyll-theme-freelancer      # 你可以选择使用已有的主题或自己编写模板
