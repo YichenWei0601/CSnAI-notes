@@ -72,7 +72,7 @@
         "/": "/README" 
     },
     darkMode: {
-        default: true,
+        default: false,
         toggleEl: '#dark-mode-toggle'
     },
     coverpage: {
@@ -90,31 +90,6 @@
         }
     }, 1500);
     };
-
-    window.$docsify.plugins = [].concat(function (hook, vm) {
-      hook.doneEach(function () {
-        const content = document.querySelector('.content');
-        const headings = content.querySelectorAll('h1, h2, h3, h4, h5, h6');
-        const toc = document.createElement('div');
-        toc.className = 'sidebar';
-
-        headings.forEach(heading => {
-          const link = document.createElement('a');
-          link.href = `#${heading.id}`;
-          link.textContent = heading.textContent;
-          link.style.display = 'block';
-          link.style.marginLeft = `${(parseInt(heading.tagName[1]) - 1) * 10}px`;
-          toc.appendChild(link);
-        });
-
-        const existingToc = document.querySelector('.sidebar');
-        if (existingToc) {
-          existingToc.remove();
-        }
-
-        document.body.appendChild(toc);
-      });
-    }, window.$docsify.plugins || []);
 
   </script>
 
