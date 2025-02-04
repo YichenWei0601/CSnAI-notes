@@ -5,5 +5,94 @@ description: "My notes about CS and AI courses / explorations."
 url: "https://owencalstroy.github.io"
 baseurl: "/CSnAI-notes"
 
-# 博客文章存放在_posts目录中
-theme: jekyll-theme-freelancer      # 你可以选择使用已有的主题或自己编写模板
+theme:
+  name: material
+  language: zh
+  static_templates:
+    - 404.html
+  include_search_page: false
+  search_index_only: true
+
+  features:
+    - header.autohide
+    - navigation.tracking
+    - navigation.top
+    - search.highlight
+    - search.share
+    - search.suggest
+    - content.code.annotate
+
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: light pink
+      accent: deep blue
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      accent: light yellow
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+
+  font:
+    text: Roboto Slab
+    code: Roboto Mono
+  icon:
+    repo: fontawesome/brands/github
+
+  custom_dir: overrides
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - footnotes
+
+plugins:
+  - i18n:
+      languages:
+        - locale: zh
+          default: true
+          name: 简体中文
+          build: true
+        - locale: en
+          name: English
+          build: true
+          site_name: csnai.blog
+          nav_translations:
+            LLM
+            C++ Books
+        - en
+  - git-revision-date:
+  - minify:
+      minify_html: true
+  - open-in-new-tab:
+
+
+nav:
+  - LLM:
+      - Introduction: "LLM/introduction.md"
+      - Contents:
+          - tst: "LLM/Contents/tst.md"
+  - C++ Books:
+      - Introduction: "cpp_books/introduction.md"
+      - Contents:
+          - The C++ Standard Library: 
+              - Chap 2: C++ 及其标准程序库简介: "doc/cpp_books/cpp_stl/ch2.md"
+              - Chap 3: 一般概念: "doc/cpp_books/cpp_stl/ch3.md"
+              - Chap 4: 通用工具: "doc/cpp_books/cpp_stl/ch4.md"
+              - Chap 5: Standard Template Library: "doc/cpp_books/cpp_stl/ch5.md"
+              - Chap 6: STL 容器: "doc/cpp_books/cpp_stl/ch6.md"
+              - Chap 7: STL 迭代器: "doc/cpp_books/cpp_stl/ch7.md"
+              - Chap 8: STL 仿函数: "doc/cpp_books/cpp_stl/ch8.md"
+              - Chap 9: STL 算法: "doc/cpp_books/cpp_stl/ch9.md"
+              - Chap 10: 特殊容器: "doc/cpp_books/cpp_stl/ch10.md"
+              - Chap 11: Strings: "doc/cpp_books/cpp_stl/ch11.md"
+              - Chap 12: Numerics: "doc/cpp_books/cpp_stl/ch12.md"
+              - Chap 13: 以 Stream Classes 完成输入和输出: "doc/cpp_books/cpp_stl/ch13.md"
+              - Chap 14: 国际化: "doc/cpp_books/cpp_stl/ch14.md"
+              - Chap 15: Allocator: "doc/cpp_books/cpp_stl/ch15.md"
+
