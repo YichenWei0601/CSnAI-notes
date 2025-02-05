@@ -87,5 +87,19 @@ date: 2025-02-05
   - istream_iterator<string>()：default 构造函数，产生一个代表流结束符号 end-of-stream 的迭代器。
   - ostream_iterator<string>(cout, "\n") 产生一个 output stream iterator，透过 operator<< 向 cout 写入 strings。第二个参数被用来作为**元素之间的分隔符**（这里每输出一个词换一行）。
 - Reverse Iterator
-  - 
-  
+  - rbegin(), rend() 分别指最后一个元素和第一个元素前一个的位置。
+### 5.6  更易型算法 Manipulating Algorithms
+- 会变更目标区间的内容，甚至会删除元素。
+- remove() 
+  - 链表中的 remove 不会改变群集中元素的数量。只是那些数字被后面的数字覆盖了。末尾哪些未被覆盖的元素原封不动。可以通过更改原链表的 end iterator 来解决。
+  - distance(A, B) 返回两个迭代器之间的距离。
+  - remove() 返回逻辑上链表的新终点迭代器。
+  - 如果真的想把被删除的元素完全删除，应该调用 erase(iterator_beg, iterator_end)。
+  ```cpp
+  coll.erase(remove(coll.begin(), coll.end(), 3), coll.end());
+  ```
+- 关联式容器为了保障 sorted 特性，它们的迭代器全被声明为指向常量，不能使用更易型算法（编译错误）。因此调用它们的成员函数 erase()。
+- erase(member) 返回删除元素的个数。
+- 为了发挥 list 的插入等算法的优越性，设计了成员函数：coll.remove(member)
+### 5.7 使用者自定义泛型函数 User-defined Generic Functions
+
