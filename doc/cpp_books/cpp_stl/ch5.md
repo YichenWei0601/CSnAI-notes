@@ -62,5 +62,30 @@ date: 2025-02-05
   - 迭代器指的是 pair，需要取出其中 first / second 元素。
 - multimap 不支持 subscript 操作符，因为 subscript 操作符只能处理单一实值。
 - 迭代器分类：双向迭代器（可+可-），随机存取迭代器（还具备随机访问能力）
-
+### 5.4 算法
+- #include <algorithm>
+- min/max_element(coll.begin(), coll.end())：返回最小/最大元素的位置。
+- sort(coll.begin(), coll.end(), ...) 默认按照 operator< 排列。
+- find(coll.begin(), coll.end(), ...) 找到第一个为...的元素。失败则返回 past-the-end 迭代器。
+- reverse(coll.begin(), coll.end()) 元素反转位置。
+- 调用者需要保证经由首位位置的参数定义取来的区间是有效的（**属于同一容器，前后位置正确**）。区间是左闭右开（即 [begin, end)）。一定注意** end 需要在想要考虑的元素的后一位**。如果不确定前后位置，可以用 pos1 < pos2 的 if-else 条件语句来分类讨论（当使用的是随机存储迭代器时），或者写一段代码来确定 pos1~end 之间是否有 pos2 出现，即手动判断两者二的前后关系（当没有随机储存迭代器）（或者直接找到两者第一次出现的位置）。
+- 处理多个区间：通常需要设定第一个区间的前后位置和之后区间的前位置（后位置可由第一区间推测得到）。
+  ```cpp
+  if (equal(coll1.begin(), coll1.end(), coll2.begin()) {...}
+  ```
+因此需要保障后面的区间拥有的元素个数至少和第一区间的元素个数相同。以及涂写（如 copy(..., ..., ...)）操作时，确保目标空间够大，不会超出去（或者需要调整容器大小）。否则这种未定义的行为会被导向 error handling procedure。
+- 调整容器大小：coll2.resize(coll1.size())
+### 5.5 迭代器之配接器 Iterator Adapters
+- STL 提供了数个预先定义的特殊迭代器，即 Iterator Adapeters。
+- Insert Iterator
+  - 使算法以 insert 而非 overwrite 方式运作，解决算法的目标空间不足问题。
+  - Back inserters: copy(coll1.begin(), coll1.end(), back_inserter(coll2)) 调用 push_back().
+  - Front inserters: copy(coll1.begin(), coll1.end(), front_inserter(coll2)) 调用 push_front()。只能提供有 push_front() 的容器。
+  - General inserters: copy(coll1.begin(), coll1.end(), inserter(coll2, coll2.begin()))，将元素插入初始化时接受的第二参数所指位置的前方，调用 insert()。
+- Stream Iterator
+  - istream_iterator<string>(cin)：产生一个可从标准输入流cin读取数据的 stream iterator。
+  - istream_iterator<string>()：default 构造函数，产生一个代表流结束符号 end-of-stream 的迭代器。
+  - ostream_iterator<string>(cout, "\n") 产生一个 output stream iterator，透过 operator<< 向 cout 写入 strings。第二个参数被用来作为**元素之间的分隔符**（这里每输出一个词换一行）。
+- Reverse Iterator
+  - 
   
