@@ -1,9 +1,5 @@
 ---
-​---
-title: Standard Template Library
-author: calscatt
-date: 2025-02-05
-​---
+Date: 2025-02-06
 ---
 
 # Chap 5: Standard Template Library
@@ -73,7 +69,7 @@ date: 2025-02-05
   ```cpp
   if (equal(coll1.begin(), coll1.end(), coll2.begin()) {...}
   ```
-因此需要保障后面的区间拥有的元素个数至少和第一区间的元素个数相同。以及涂写（如 copy(..., ..., ...)）操作时，确保目标空间够大，不会超出去（或者需要调整容器大小）。否则这种未定义的行为会被导向 error handling procedure。
+  因此需要保障后面的区间拥有的元素个数至少和第一区间的元素个数相同。以及涂写（如 copy(..., ..., ...)）操作时，确保目标空间够大，不会超出去（或者需要调整容器大小）。否则这种未定义的行为会被导向 error handling procedure。
 - 调整容器大小：coll2.resize(coll1.size())
 ### 5.5 迭代器之配接器 Iterator Adapters
 - STL 提供了数个预先定义的特殊迭代器，即 Iterator Adapeters。
@@ -102,4 +98,47 @@ date: 2025-02-05
 - erase(member) 返回删除元素的个数。
 - 为了发挥 list 的插入等算法的优越性，设计了成员函数：coll.remove(member)
 ### 5.7 使用者自定义泛型函数 User-defined Generic Functions
-
+### 5.8 以函数作为算法的参数
+- for_each(coll.begin(), coll.end(), func)：针对区间内的每一个元素，调用一个由用户指定的函数。
+- std::transform (col.begin(), coll.end(), std::back_inserter(coll2), square); 也是类似的。
+- 判断式 predicates：返回布尔值的函数。
+- find_if (beg, end, boolean_func) 在给定区间内寻找使得“被传入的一元判断式”运算结果是 true 的的第一个元素。
+- sort (beg, end, boolean_func)
+### 5.9 仿函数 Functors, Function Objects
+- 是行为类似函数的对象，通过小括号的运用和参数的传递。
+  ```cpp
+  class X {
+  public:
+  	return-value operator() (arguments) const;	// fill in: r-v, arg
+  	...
+  };
+  X fo;
+  fo(arg1, arg2);	// call operator () for function object fo.
+  fo.operator()(arg1, arg2);	// the same
+  for_each(coll.begin(), coll.end(), X());	// 通过默认初始化，产生此类别的一个临时对象 X()，可以作为参数。
+  ```
+- 仿函数的优点：
+	- 是 smart functions，可以拥有成员函数和成员变量，从而拥有状态。
+	- 有自己的型别，可以将函数性别当作 template 参数使用。
+	- 通常比一般函数更快。
+- set<int> coll 默认会扩展为 set<int, less<int>> coll ，因此反向排列 set<int, greater<int>> coll。其中 less 和 greater 是仿函数。
+- negate<int>() 取相反数，是一个仿函数。
+- transform (coll1.begin(), coll1.end(), coll2.begin(), coll3.begin(), func) 将 coll1 和 coll2 的对应数据进行 func 处理后放入 coll3 里。
+- multiplies<int>() 做乘法，是一个仿函数。
+  ```cpp
+  transform (coll1.begin(), coll1.end(), coll2.begin(), coll3.begin(), multiplies<int>());	// coll1 * coll2 -> coll3
+  transform (coll1.begin(), coll1.end(), back_inserter(coll2), bind2nd(multiplies<int>(), 10));		// coll1 * 10 -> coll2
+  ```
+  bind2nd() 保存表达式，把第二参数当作内部数值也保存。当算法以实际群集元素为参数，调用 bind2nd 时，他把该元素当成第一参数，把保存下来的那个内部数值当成第二参数。
+- mem_func_ref(&Person::save) （内部可换）来调用它所作用元素的某个成员函数。是一个仿函数。
+### 5.10 容器内的元素
+- STL容器元素必须满足以下基本要求：
+	- 必须可透过 copy 购下函数进行复制。副本与原本必须相等（行为一致）。copy 构造函数的性能应该被优化，否则考虑尽量使用 reference 来传递。
+	- 必须可以透过 assignment 操作符完成复制动作。（以新元素改写/取代旧元素）
+	- 必须可以透过析构函数完成销毁动作。析构函数不应该是 private，不应该抛出异常。
+	- 对于序列式容器而言，元素的 default 构造函数必须可用。
+	- operator== 需要定义。
+	- 排序准则。默认 operator<，透过仿函数 less<> 调用。
+### 5.11 STL 内部的错误处理和异常处理
+- 对于 STL 的任何运用，如果违反规则，将导致未定义的行为。
+- STL 几乎不检验逻辑错误。所以逻辑问题几乎不会引发 STL 产生异常。
