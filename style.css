@@ -1,0 +1,112 @@
+/* ============ 可修改参数区域 ============ */
+/* 修改下面的 CSS 变量以改变整体主题颜色 */
+:root {
+    --navbar-bg: #8c9ef5;    /* 顶部横条背景色，修改此处 */
+    --sidebar-bg: #e6e8f4;   /* 左右边栏背景色，修改此处 */
+    --navbar-text: #000000;  /* 顶部横条文字颜色 */
+    --sidebar-text: #36275e; /* 边栏文字颜色 */
+  }
+  
+  /* ============ 页面全局样式 ============ */
+/* 引入自定义字体示例 */
+@font-face {
+    font-family: 'MyCustomFont'; /* 自定义字体名称 */
+    src: url('font/TokyoRockstar.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  /* 为顶部横条定义另一套字体 */
+  @font-face {
+    font-family: 'TopNavFont';
+    src: url('font/Magnetar.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'MilkyWeek';
+    src: url('font/MilkyWeek.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  /* 全局默认样式 */
+  body {
+    font-family: Roboto Mono, sans-serif;
+    font-size: 16px;    /* 默认字体大小 */
+    font-weight: 400;   /* 默认字体粗细 */
+  }
+  
+  /* 调整“我的博客”文字大小 */
+  .navbar-brand {
+    font-family: 'TopNavFont', sans-serif;
+    font-size: 28px !important;  /* 修改为你需要的大小 */
+  }
+  
+  /* 调整“页面目录”（或侧边栏标题）文字大小 */
+  .sidebar-heading span {
+    font-size: 26px !important;  /* 修改为你需要的大小 */
+    font-weight: 800;
+  }
+  
+
+  /* 顶部横条样式：使用不同字体、大小和粗细 */
+  /* 请修改 #topNavbar 为你实际顶上横条的选择器 */
+  #topNavbar {
+    font-family: 'MyCustomFont', sans-serif;
+    font-size: 26px;    /* 顶部横条字体大小 */
+    font-weight: 900;   /* 顶部横条字体粗细 */
+  }
+  
+  /* 左侧边栏样式 */
+  /* 请修改 .sidebar 为你实际边栏的选择器 */
+  .sidebar {
+    font-family: 'MilkyWeek', sans-serif; /* 也可以替换为其他自定义字体 */
+    font-size: 16px;    /* 边栏字体大小 */
+    font-weight: 600;   /* 边栏字体粗细 */
+  }
+  
+  
+  /* 顶部导航栏样式 */
+  #topNavbar {
+    background-color: var(--navbar-bg);
+    color: var(--navbar-text);
+  }
+  
+  /* 修改边栏背景及文字颜色 */
+  .sidebar {
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    min-height: 100vh;
+    padding: 0.5rem;
+  }
+  
+  /* 自定义搜索结果弹层 */
+  .search-results {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    background: #fff;
+    border: 1px solid #ccc;
+    max-height: 300px;
+    overflow-y: auto;
+    width: 300px;
+    z-index: 1050;
+    display: none;
+    padding: 10px;
+  }
+  
+  /* 鼠标悬停时改变链接背景色 */
+  .nav-link:hover {
+    background-color: #c8d9e9;
+    cursor: pointer;
+  }
+  
+  /* 左侧折叠菜单箭头样式 */
+  .toggle-arrow {
+    display: inline-block;
+    width: 1em;
+    transition: transform 0.2s ease-in-out;
+  }
+  
