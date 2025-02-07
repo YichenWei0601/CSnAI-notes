@@ -1,75 +1,103 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-cn">
 <head>
   <meta charset="UTF-8">
-  <title>CSnAI</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- 引入 Bootstrap 5 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- 引入自定义样式 -->
-  <link rel="stylesheet" href="style.css">
-  <!-- 引入 marked.js 用于 Markdown 渲染 -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <!-- 引入 Lunr.js 用于全文搜索 -->
-  <script src="https://cdn.jsdelivr.net/npm/lunr/lunr.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSnAI Notes</title>
+  
+  <!-- Docsify 样式 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-dark-mode/dist/style.min.css">
+
+  <style>
+    /* 确保正文不会被导航栏遮挡 */
+    #app {
+      margin-top: 20px !important;
+    }
+    /* 让封面页高度变小 */
+    .cover-main {
+      min-height: 30vh !important;
+    }
+    /* 导航栏样式 */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+    /* 深色模式按钮样式 */
+    .dark-mode-button {
+      cursor: pointer;
+      padding: 5px 10px;
+      background: #333;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
-  <!-- 顶部导航栏 -->
-  <nav class="navbar navbar-expand-lg" id="topNavbar">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">CSnAI</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-              aria-controls="navbarNav" aria-expanded="false" aria-label="Switch navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-         <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="#" id="homeBtn">HOME</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" id="aboutBtn">ABOUT</a>
-            </li>
-         </ul>
-         <form class="d-flex" role="search">
-           <input class="form-control me-2" type="search" id="searchInput" placeholder="Search" aria-label="Search">
-           <button class="btn btn-outline-light" type="button" id="searchBtn">Search</button>
-         </form>
-      </div>
-    </div>
-  </nav>
-  <!-- 主体部分 -->
-  <div class="container-fluid">
-    <div class="row">
-      <!-- 左侧边栏 -->
-      <nav id="docList" class="col-md-3 col-lg-2 d-md-block sidebar" aria-label="File Contents">
-        <div class="position-sticky pt-3">
-          <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mb-1 text-muted">
-            <span>File Contents</span>
-          </h6>
-          <!-- 左侧目录，将由 script.js 递归生成 -->
-          <div id="docNav"></div>
-        </div>
-      </nav>
-      <!-- 主内容区域 -->
-      <main class="col-md-9 ms-sm-auto col-lg-7 px-md-4" id="markdownContent">
-      </main>
-      <!-- 右侧目录 -->
-      <nav class="col-lg-3 d-none d-lg-block sidebar" aria-label="Page Contents">
-        <div class="position-sticky pt-3">
-          <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mb-1 text-muted">
-            <span>Contents</span>
-          </h6>
-          <ul class="nav flex-column" id="toc"></ul>
-        </div>
-      </nav>
-    </div>
-  </div>
-  <!-- 搜索结果区域 -->
-  <div id="searchResults" class="search-results"></div>
 
-  <!-- 引入 Bootstrap 5 JS (包含 Popper) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="script.js"></script>
+  <!-- Docsify 容器 -->
+  <div id="app">加载中...</div>
+
+  <!-- 导航栏 -->
+  <nav>
+    <div>
+      <a href="#/">🏠 首页</a>
+      <a href="#/guide">📖 指南</a>
+      <a href="https://github.com/owencalstroy/CSnAI-notes" target="_blank">GitHub</a>
+    </div>
+    <button class="dark-mode-button" id="dark-mode-toggle">🌗 切换深色模式</button>
+  </nav>
+
+  <!-- Docsify 配置 -->
+  <script>
+    window.$docsify = {
+    name: 'CSnAI Notes',
+    repo: 'https://github.com/owencalstroy/CSnAI-notes',
+    loadSidebar: true,
+    //sidebar: 'auto',
+    loadNavbar: true,
+    subMaxLevel: 3,
+    coverpage: true,  // 启用封面页
+    search: 'auto',
+    alias: {
+        "/": "/README" 
+    },
+    darkMode: {
+        default: false,
+        toggleEl: '#dark-mode-toggle'
+    },
+    coverpage: {
+      image: '/assets/images/wallpaper.png',  // 指定封面图片路径
+      width: 300,  // 可选：设置图片宽度
+      height: 200, // 可选：设置图片高度
+    }
+    };
+
+    // 让 GitHub Pages 也能自动滚动
+    window.onload = function () {
+    setTimeout(function () {
+        if (location.hash === "" || location.hash === "#/") {
+        window.scrollTo({ top: window.innerHeight * 1.0, behavior: "smooth" });
+        }
+    }, 1500);
+    };
+
+  </script>
+
+  <!-- Docsify 核心库 -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+  
+  <!-- 深色/浅色模式切换 -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify-dark-mode/dist/index.min.js"></script>
+
 </body>
 </html>
