@@ -120,3 +120,20 @@ Date: 2025-02-07
   - The invasive approach 侵入性做法：直接提供 STL 容器所需接口。
   - The noninvasive approach 非侵入性做法：由你撰写或提供特殊迭代器（能够遍历元素），作为算法和特殊容器间的界面。
   - The wrapper approach 包装法：结合上两个。
+
+### 6.8 动手实现 Reference 语义
+
+- 实现对指针所指对象采用 reference counting 的智能型指针。类似 auto_ptr，但是被复制后，原指针和新的副本指针都有效。只有当指向同一对象的最后一个智能型指针被摧毁，其所指对象才会被删除。
+- 参考 http://www.boost.org/ 的 Boost 程序库（是 C++ 标准程序库的补充）。（这个指针在里面叫做 shared_ptr）
+
+### 6.9 各种容器的运用时机
+
+- 缺省情况下用 vector，内部结构最简单，允许随机存取。
+- 按照安插元素的需求选择 vector，list，deque。
+- 如果不希望 iterators / pointers / references 失效，采用 list。
+- “每次操作若不成功，便无效用”（并用此态度处理异常），则用 list。
+- 就搜索速度而言，hash table 通常比二叉树还要快 5~10 倍。所以如果有 hash table （即使未标准化）也考虑使用。但是排序不用 hash table。
+- 根据两种不同的排序准则对元素进行排序，则需要两个 set / map，准则不同但共享相同的元素。
+
+### 6.10 细说容器内的型别和成员
+
