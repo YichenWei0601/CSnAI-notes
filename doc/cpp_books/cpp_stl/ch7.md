@@ -53,3 +53,59 @@
   - rbegin(), rend() 的位置分别对应 end(), begin()，但所指的值是位置的前一个。[1, 2, 3] 里如果 rpos() 位置在 3，那么它所指的值是 2。这样在迭代器转换为 reverse 迭代器的时候，区间包含的元素都不会改变，仅仅是顺序反过来了。
   - **迭代器转换为 reverse 迭代器，迭代器实际位置不变，变化的是所指的数值。**
   - rpos.base() 可以将 reverse 迭代器 rpos 反转成一般迭代器。第二条也适用。
+
+- Insert（安插型）迭代器：用来将“赋值新值”操作转换为“安插新值”操作。算法可以执行 insert 而非 overwrite。属于 Output 迭代器。
+  - 实作技巧：
+    		1. operator* 被实作成只传回 *this，也就是 *pos 和 pos 等价。递增操作也不会有任何操作，只是传回 *this。
+        		2. 赋值动作转换为安插动作。调用容器的 push_back(), push_front, insert() 函数。
+
+	- back_insert_iterator<...>, back_inserter(container) 通过函数 push_back() 将一个元素值追加于容器尾部。（需要支持 push_back() 的容器才能使用）
+	   ```cpp
+	   // 使用方法：
+	   back_insert_iterator<vector<int>> iter(coll);
+	   *iter = 1;
+	   ++iter;
+	   *iter = 2;
+	   ++iter;
+	   
+	   // convinient way:
+	   back_inserter(coll) = 3;
+	   copy(coll.begin(), coll.end(), back_inserter(coll));
+	   ```
+	- front_insert_iterator<...>, front_inserter(container) 通过函数 push_front() 将一个元素值追加于容器头部。（需要支持 push_front() 的容器才能使用）
+	   ```cpp
+	   // 使用方法：
+	   front_insert_iterator<vector<int>> iter(coll);
+	   *iter = 1;
+	   ++iter;
+	   *iter = 2;
+	   ++iter;
+	   // -> [2, 1]
+	   
+	   // convinient way:
+	   front_inserter(coll) = 3;
+	   // -> [3, 2, 1]
+	   
+	   // 注意安插多个元素时，时逆序方式插入。[3，2，1] -> [1, 2, 3, 3, 2, 1]
+	   copy(coll.begin(), coll.end(), front_inserter(coll));
+	   ```
+	 - general inserter 调用成员函数 insert()。相当于调用：
+	   ```cpp
+	   pos = container.insert(pos, value);
+	   ++pos;
+	   ```
+	
+	   是为了防止每一次安插带来的迭代器失效而做的工作。
+
+- stream 迭代器
+  - Ostream 迭代器：将被赋予的值写入 output stream 中。调用 operator<<
+    - ostream_iterator<T>(ostream, delim)：为 ostream 产生一个迭代器，各元素之间以 delim 作为分隔符。delim 型别为 const char*
+  - Istream 迭代器：需要提供 input stream 作为参数，迭代器将从其中读取数据。调用 operator>>。
+    - istream 的 default 是 end-of-stream 迭代器。有任何一次读取失败，所有迭代器变成它。每次读取为确保有效，所有迭代器都要和它比较。
+    - istream_iterator<T>(istream) 为 istream 产生一个迭代器，可能立刻读取第一个元素。
+    - 可以进行 ++iter, iter++，读取下一个元素。
+    - 可以用 advance() 进行多步跳跃。记得要检验是否合法(end_of_stream)。
+
+### 7.5 迭代器特性
+
+- 对于不同的迭代器重载函数，使得针对性提供特化版本。
