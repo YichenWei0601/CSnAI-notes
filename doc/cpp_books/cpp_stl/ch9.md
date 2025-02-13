@@ -211,3 +211,262 @@ for_each (InputIterator beg, InputIterator end, UnaryProc op)
   - 返回目标区间内最后一个被转换元素的下一位置，也就是第一个未被覆盖的元素位置。
   - 需要保证空间足够，否则要用插入型迭代器。
 
+- 互换元素内容
+  ```cpp
+  ForwardIterator2 swap_ranges (ForwardIterator1 beg1, ForwardIterator1 end1, ForwardIterator2 beg2)
+  ```
+
+  - 将区间以内的元素和“从 beg2 开始的区间”内的对应元素互换。返回第二区间中“最后一个被交换元素”的下一位置。
+  - 区间不能重叠。需要确保第二区间有充足的空间。
+  - 如果要将相同型别的两个容器内的所有元素互换，则使用 swap()（更快）。
+
+- 赋予新值 assigning
+  ```cpp
+  // 赋予完全相同的数值
+  
+  void fill (ForwardIterator beg, ForwardIterator end, const T& newValue)
+  void fill_n (OutputIterator beg, Siz num, const T& newValue)
+  ```
+
+  - 第一个将区间内的所有元素都赋予新值 newValue。第二个将从 beg 开始的 num 个元素都赋予新值 newValue。
+  - 保证足够空间，否则用插入迭代器。
+  ```cpp
+  // 赋予新产生的数值
+  
+  void generate (ForwardIterator beg, ForwardIterator end, Func op)
+  void generate_n (OutputIterator beg, Size num, Func op	)
+  ```
+  
+  - 与上面相似，但是会调用 op() 产生新值。注意不会获得原来的数作为参数。
+- 替换元素
+  ```cpp
+  // 替换序列内的元素
+  
+  void replace (ForwardIterator beg, ForwardIterator end, const T& oldValue, const T& newValue)
+  void replace_if (ForwardIterator beg, ForwardIterator end, UnaryPredicate op, const T& newValue)
+  ```
+
+  ```cpp
+  // 复制并替换元素
+  
+  OutputIterator replace_copy (InputIterator sourceBeg, InputIterator sourceEnd, OutputIterator destBed, const T& oldValue, const T& newValue)
+  OutputIterator replace_copy_if (InputIterator sourceBeg, InputIterator sourceEnd, OutputIterator destBed, UnaryPredicate op, const T& newValue)
+  ```
+
+  - 是 copy() 和 replace() 的组合。它将源区间中的元素复制到“以 destBeg 为起点”的目标区间，同时将其中...的元素替换为 newValue。返回目标区间中“最后一个被复制元素”的下一位置，也就是第一个未被覆盖的元素位置。**注意！！！是先复制再修改副本，源区间的元素不会改变。**
+
+### 9.7 移除性算法 Removing Algorithms
+
+- 移除某些特定元素
+  ```cpp
+  // 移除某序列内的元素
+  
+  ForwardIterator remove (ForwardIterator beg, ForwardIterator end, const T& value)
+  ForwardIterator remove_if (ForwardIterator beg, ForwardIterator end, UnaryPredicate op)
+  ```
+
+  - 这些算法都返回变动后的序列的新逻辑终点。这些算法会把原本置于后面的未移除元素向前移动，覆盖移除元素。未被移除的元素在相对次序上保持不变。
+  ```cpp
+  // 复制时一并移除元素
+  
+  OutputIterator remove_copy (InputIterator sourceBeg, InputIterator sourceEnd, OutputIterator destBeg, const T& value)
+  OutputIterator remove_copy_if (InputIterator sourceBeg, InputIterator sourceEnd, OutputIterator destBeg, UnaryPredicate op)
+  ```
+
+- 移除重复元素
+  ```cpp
+  // 移除连续重复元素
+  
+  ForwardIterator unique (ForwardIterator beg, ForwardIterator end)
+  ForwardIterator unique (ForwardIterator beg, ForwardIterator end, BinaryPredicate op)
+  ```
+
+  - 第一形式将每一个“与前一元素相等”的元素移除。所以源序列必须先经过排序，才能使用这个算法移除所有重复元素。
+  - 第二形式将每一个“位于元素 e 之后并且造成 op(elem, e) 结果为 true”的所有 elem 元素一处。换言之此一判断式并非用来将元素和其原本的前一元素进行比较，而是将它和未被移除的前一元素比较。 
+  ```cpp
+  // 复制过程中移除重复元素
+  
+  OutputIterator unique_copy (InputIterator sourceBeg, InputIterator sourceEnd, OutputIterator destBeg)
+  OutputIterator unique_copy (InputIterator sourceBeg, InputIterator sourceEnd, OutputIterator destBeg, BinaryPredicate op)
+
+### 9.8 变序性算法 Mutating Algorithms
+
+- 变序性算法改变元素的次序，但不改变元素值。这些算法不能用于关联式容器，因为在关联式容器中，元素有一定的次序，不能随意变动。
+
+- 逆转元素次序 Reversing
+  ```cpp
+  void reverse (bidirectionalIterator beg, BidirectionalIterator end)
+  OutputIterator reverse (bidirectionalIterator sourceBeg, BidirectionalIterator sourceEnd, OutputIterator destBeg)
+  ```
+
+- 旋转元素次序 Rotating
+  ```cpp
+  // 旋转序列内的元素
+  
+  void rotate (ForwardIterator beg, ForwardIterator newBeg, ForwardIterator end)
+  ```
+
+  - 将区间内的元素进行旋转。执行后 *newBeg 成为新的第一个元素。
+  - 需要保证 newBeg 是区间内的有效位置，否则引发未定义的行为。
+  - 可以使用正偏移量将元素向左起点方向旋转，也可以使用负偏移量向右。
+  - 只有在随机存取迭代器上才能为它加偏移量。否则只能用 advance()。
+  ```cpp
+  // 复制并同时旋转元素
+  
+  OutputIterator rotate_copy (ForwardIterator sourceBeg, ForwardIterator newBeg, ForwardIterator soutceEnd, OutputIterator destBeg)
+
+- 排列元素 Permuting
+  ```cpp
+  bool next_permutation (BidirectionalIterrator beg, BidirectionalIterator end)
+  bool prev_permutation (BidirectionalIterrator beg, BidirectionalIterator end)
+  ```
+
+  - 前者会改变元素次序，使他们符合“下一个排列次序”。后者使他们符合“上一个排列次序”。到达头/尾时候返回 false，其他都返回 true。
+  - 拿(1, 2, 3)为例，这三个元素“排列”的排列是[(1,2,3),(1,3,2),(2,1,3),(2,3,1),(3,1,2),(3,2,1)]。
+
+- 重排元素 Shuffling
+  ```cpp
+  void random_shuffle (RandomAccessIterator beg, RandomAccessIterator end)
+  void random_shuffle (RandomAccessIterator beg, RandomAccessIterator end, RandomFunc& op)
+  ```
+
+  - 第一形式用一个均匀分布随机数产生器（uniform distribution random number generator）来打乱区间内的元素次序。
+    第二形式用 op 打乱区间内的元素次序。算法内部会使用一个整数值（型别为“迭代器所提供的 difference_type）来调用：op(max)，返回一个大于零而小于（不含）max的随机数。
+  - op 是一个 non-const refrence。所以不可以将暂时数值或者一般函数传入。
+
+- 将元素向前搬移
+  ```cpp
+  BidirectionalIterator partition (BidirectionalIterator beg, BidirectionalIterator end, UnaryPredicate op)
+  BidirectionalIterator stable_partition (BidirectionalIterator beg, BidirectionalIterator end, UnaryPredicate op)
+  ```
+
+  - 都将区间内造成 op(elem) 为 true 的元素向前端移动，返回令 op() 结果为 false 的第一个元素位置。
+  - stable 那个会保持元素之间的相对位置。
+
+### 9.9 排序算法 Sorting Algorithms
+
+- 对所有元素排序
+  ```cpp
+  void sort (RandomAccessIterator beg, RandomAccessIterator end)
+  void sort (RandomAccessIterator beg, RandomAccessIterator end, BinaryPRedicate op)
+  
+  void stable_sort (RandomAccessIterator beg, RandomAccessIterator end)
+  void stable_sort (RandomAccessIterator beg, RandomAccessIterator end, BinaryPRedicate op)
+  ```
+
+  - 复杂度 O(nlog(n))，后者如果内存不够则 O(nlog(n)*log(n))。
+
+- 局部排序
+  ```cpp
+  void partial_sort (RandomAccessIterator beg, RandomAccessIterator sortEnd, RandomAccessIterator end)
+  void partial_sort (RandomAccessIterator beg, RandomAccessIterator sortEnd, RandomAccessIterator end, BinaryPredicate op)
+  ```
+
+  - 对于 [begin, end) 排序，使得 [begin, sortEnd) 内元素处于有序状态。比对所有元素排序快。
+  ```cpp
+  void partial_sort_copy (RandomAccessIterator beg, RandomAccessIterator sortEnd, RandomAccessIterator end)
+  void partial_sort_copy (RandomAccessIterator beg, RandomAccessIterator sortEnd, RandomAccessIterator end, BinaryPredicate op)
+  ```
+
+- 根据第 n 个元素排序
+
+-   ```cpp
+    void nth_element (RandomAccessIterator beg, RandomAccessIterator nth, RandomAccessIterator end)
+    void nth_element (RandomAccessIterator beg, RandomAccessIterator nth, RandomAccessIterator end, BinaryPredicate op)
+    ```
+
+  - 排序使得所有在位置 n 之前的元素都小于等于它，在它之后的元素都大于等于它。也就是说，把序列分成两个子序列，第一子序列的元素统统小于第二子序列的元素。用来找出前 x 大/小的元素。
+  - O(n) 平均。子序列里面不排序。
+
+- Heap 算法
+
+  - **核心：heap 可被视为一个以序列式群集实作而成的二叉树。**
+
+  - 第一个元素总是最大；总能在对数时间内增加或删除一个元素。
+
+  - ```cpp
+    void make_heap (RandomAccessIterator beg, RandomAccessIterator end)
+    void make_heap (RandomAccessIterator beg, RandomAccessIterator end, BinaryPredicate op)
+    ```
+
+  - ```cpp
+    void push_heap (RandomAccessIterator beg, RandomAccessIterator end)
+    void push_heap (RandomAccessIterator beg, RandomAccessIterator end, BinaryPredicate op)
+    ```
+
+    保证原本 [beg, end-1) 就是一个 heap，而加入最后一个成为一个新 heap。
+
+  - ```cpp
+    void pop_heap (RandomAccessIterator beg, RandomAccessIterator end)
+    void pop_heap (RandomAccessIterator beg, RandomAccessIterator end, BinaryPredicate op)
+    ```
+
+    将 heap 里最高的元素（即第一个元素）移到最后位置，然后 [beg, end-1) 形成一个新 heap。保证原来就是一个 heap。
+
+  - ```cpp
+    void sort_heap (RandomAccessIterator beg, RandomAccessIterator end)
+    void sort_heap (RandomAccessIterator beg, RandomAccessIterator end, BinaryPredicate op)
+    ```
+
+    转换成一个 sorted 序列，这样就不再是 heap 了。
+
+### 9.10 已序区间算法 Sorted Range Algorithms
+
+- 前提一定是在已序区间中使用，否则导致未定义行为。这样会最多需要线性时间，大多时候为对数时间。
+
+- 搜索元素
+  ```cpp
+  // 检查某个元素是否存在
+  
+  bool binary_search (ForwardIterator beg, ForwardIterator end, const T& value)
+  bool binary_search (ForwardIterator beg, ForwardIterator end, const T& value, BinaryPredicate op)
+  ```
+
+  ```cpp
+  // 检查若干个值是否存在
+  
+  bool includes (InputIterator1 beg, InputIterator1 end, InputIterator2 searchBeg, InputIterator2 searchEnd)
+  bool includes (InputIterator1 beg, InputIterator1 end, InputIterator2 searchBeg, InputIterator2 searchEnd, BinaryPredicate op)
+  ```
+
+  - 寻找 searchBeg-searchEnd 里的所有元素是否存在在 beg-end 区间中。
+  - 需要保证两个区间都是 sorted。
+  - 只是搜索元素是否存在，不需要保证元素一定相邻。
+  ```cpp
+  // 搜索第一个大于等于 value 的元素位置。
+  ForwardIterator lower_bound (ForwardIterator beg, ForwardIterator end, const T& value)
+  ForwardIterator lower_bound (ForwardIterator beg, ForwardIterator end, const T& value, BinaryPredicate op)
+  
+  // 搜索第一个大于 value 的元素位置
+  ForwardIterator upper_bound (ForwardIterator beg, ForwardIterator end, const T& value)
+  ForwardIterator upper_bound (ForwardIterator beg, ForwardIterator end, const T& value, BinaryPredicate op)
+      
+  // 搜索等于 value 的区间
+  pair<ForwardIterator, ForwardIterator> equal_range (ForwardIterator beg, ForwardIterator end, const T& value)
+  pair<ForwardIterator, ForwardIterator> equal_range (ForwardIterator beg, ForwardIterator end, const T& value, BinaryPredicate op)
+  ```
+  
+- 合并元素 Merging
+
+  - 两个已序集合的总和 Sum
+    ```cpp
+    OutputIterator merge (InputIterator source1Beg, InputIterator source1End, InputIterator source2Beg, InputIterator source2End, OutputIterator destBeg)
+    OutputIterator merge (InputIterator source1Beg, InputIterator source1End, InputIterator source2Beg, InputIterator source2End, OutputIterator destBeg, BinaryPredicate op)
+    ```
+
+    将两个集合的元素直接一起放入目标区间，再按顺序排列。返回最后一个被复制元素的下一位置。
+  - 两个已序集合的并集 Union
+    ```cpp
+    OutputIterator set_union (InputIterator source1Beg, InputIterator source1End, InputIterator source2Beg, InputIterator source2End, OutputIterator destBeg)
+    OutputIterator set_union (InputIterator source1Beg, InputIterator source1End, InputIterator source2Beg, InputIterator source2End, OutputIterator destBeg, BinaryPredicate op)
+    ```
+  
+    取两个集合的并集，使得新集合元素要么来自第一区间，要么来自第二区间，要么都有。对于重复的元素，取两个区间里这个元素重复个数的较大值。
+
+  - 两个已序集合的交集 Intersection
+    ```cpp
+    OutputIterator set_intersection (InputIterator source1Beg, InputIterator source1End, InputIterator source2Beg, InputIterator source2End, OutputIterator destBeg)
+    OutputIterator set_intersection (InputIterator source1Beg, InputIterator source1End, InputIterator source2Beg, InputIterator source2End, OutputIterator destBeg, BinaryPredicate op)
+    ```
+  
+    取两个集合的交集，使得新集合元素同时来自两个区间。对于重复的元素，取两个区间里这个元素重复个数的较小值。
